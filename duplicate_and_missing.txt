@@ -1,0 +1,44 @@
+You are given a read only array of n integers from 1 to n.
+
+Each integer appears exactly once except A which appears twice and B which is missing.
+
+Return A and B.
+
+Note: Your algorithm should have a linear runtime complexity. Could you implement it without using extra memory?
+
+Note that in your output A should precede B.
+
+Example:
+
+Input:[3 1 2 5 3] 
+
+Output:[3, 4] 
+
+A = 3, B = 4
+
+solution:
+
+public class Solution {
+    // DO NOT MODIFY THE LIST. IT IS READ ONLY
+    public ArrayList<Integer> repeatedNumber(final List<Integer> A) {
+        int[] arr = new int[A.size() + 1];
+        int missing = 0;
+        int repeating = 0;
+        for(int i = 0; i < A.size(); i++) {
+            arr[A.get(i)]++;
+        }
+        
+        for(int i = 1; i < arr.length; i++) {
+            if(arr[i] == 0){
+                missing = i;
+            } 
+            if(arr[i] > 1) {
+                repeating = i;
+            }
+        }
+        ArrayList<Integer> list = new ArrayList<>();
+        list.add(repeating);
+        list.add(missing);
+        return list;
+    }
+}
