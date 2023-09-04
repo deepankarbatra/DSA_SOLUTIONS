@@ -1,0 +1,61 @@
+Given an array nums of n integers, return an array of all the unique quadruplets [nums[a], nums[b], nums[c], nums[d]] such that:
+
+0 <= a, b, c, d < n
+a, b, c, and d are distinct.
+nums[a] + nums[b] + nums[c] + nums[d] == target
+You may return the answer in any order.
+
+ 
+
+Example 1:
+
+Input: nums = [1,0,-1,0,-2,2], target = 0
+Output: [[-2,-1,1,2],[-2,0,0,2],[-1,0,0,1]]
+
+
+solution:
+O(N3)
+class Solution {
+    public List<List<Integer>> fourSum(int[] nums, int target) {
+        List<List<Integer>> sol = new ArrayList<List<Integer>>();
+        Arrays.sort(nums);
+        for(int i = 0; i < nums.length; i++) {
+            for(int j = i + 1; j < nums.length; j++) {
+                int k = j + 1;
+                int l = nums.length - 1;
+                long tar = target - (long)nums[i] - (long)nums[j];
+                while(k < l) {
+                    long new_tar = (long)nums[k] + (long)nums[l];
+                    if(new_tar < tar) {
+                        k++;
+                    } else if(new_tar > tar) {
+                        l--;
+                    } else {
+                        List<Integer> list = new ArrayList<>();
+                        list.add(nums[i]);
+                        list.add(nums[j]);
+                        list.add(nums[k]);
+                        list.add(nums[l]);
+                        sol.add(list);
+
+                        while(k < l && nums[k] == list.get(2)){
+                            k++;
+                        }
+
+                        while(k < l && nums[l] == list.get(3)) {
+                            l--;
+                        }
+                    }
+                }
+                while(j + 1 < nums.length && nums[j] == nums[j + 1]) {
+                    j++;
+                }
+            }
+            while(i + 1 < nums.length && nums[i] == nums[i + 1]) {
+                    i++;
+                }
+        }
+        return sol;
+    }
+}
+
